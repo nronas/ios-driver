@@ -26,7 +26,7 @@ import org.uiautomation.ios.exceptions.IOSAutomationException;
 import org.uiautomation.ios.server.instruments.ClassicCommands;
 import org.uiautomation.ios.server.servlet.CustomMessage;
 
-public class BeginView extends MainHeader implements View{
+public class BeginView implements View{
 
   private List<String> supportedApps = new ArrayList<String>();
   private CustomMessage msg = null;
