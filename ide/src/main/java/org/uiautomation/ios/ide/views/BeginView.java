@@ -53,7 +53,6 @@ public class BeginView extends MainHeader implements View{
 
     b.append("</head>");
     b.append("<body>");
-    b.append(this.renderHeaderPartial());
     if(this.msg != null){
       if(this.msg.getType().equals("error")){
         b.append("<div class = 'error message' id='message'>"+ msg.getMessage() +"</div>");
