@@ -26,7 +26,7 @@ import org.uiautomation.ios.exceptions.IOSAutomationException;
 import org.uiautomation.ios.server.instruments.ClassicCommands;
 import org.uiautomation.ios.server.servlet.CustomMessage;
 
-public class BeginView implements View{
+public class BeginView extends MainHeader implements View{
 
   private List<String> supportedApps = new ArrayList<String>();
   private CustomMessage msg = null;
@@ -47,34 +47,53 @@ public class BeginView implements View{
     StringBuilder b = new StringBuilder();
     b.append("<html>");
     b.append("<head>");
-    b.append(" <link rel='stylesheet' href='" + getResource("ide.css") + "'  type='text/css'/>");
     b.append("<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'></script>");
+    b.append(" <link rel='stylesheet' href='" + getResource("ide.css") + "'  type='text/css'/>");
     b.append("<script type='text/javascript' src='" + getResource("begin.js") + "'></script>");
 
     b.append("</head>");
     b.append("<body>");
+    b.append(this.renderHeaderPartial());
     if(this.msg != null){
       if(this.msg.getType().equals("error")){
-        b.append("<div class = 'error-msg'>"+ msg.getMessage() +"</div>");
+        b.append("<div class = 'error message' id='message'>"+ msg.getMessage() +"</div>");
       }
       else if(this.msg.getType().equals("notice")){
-        b.append("<div class = 'notice-msg'>"+ msg.getMessage() +"</div>");
+        b.append("<div class = 'notice message' id='message'>"+ msg.getMessage() +"</div>");
       }
     }
+    b.append("<br />");
     b.append("<form action='start' method='GET'>");
 
     b.append("<input  type='text' name='" + IOSCapabilities.DEVICE
-        + "' value= '" + IOSDevice.iPhoneSimulator + "' />");
-
-
+        + "' value= '" + IOSDevice.iPhoneSimulator + "', class= 'text-field' />");
+    
+    b.append("<table>");
+    b.append("<tr>");
     b.append(select(IOSCapabilities.LOCALE, getLocales()));
+    b.append("</tr>");
     b.append(select(IOSCapabilities.LANGUAGE, getLanguage()));
-
+    b.append("</tr>");
+    b.append("<tr>");
     b.append(select(IOSCapabilities.SDK_VERSION, ClassicCommands.getInstalledSDKs()));
+    b.append("</tr>");   
+    b.append("<tr>");
     b.append(select(IOSCapabilities.AUT, supportedApps));
+    b.append("</tr>");
+    b.append("<tr>");
     b.append(select(IOSCapabilities.TIME_HACK, new String[] {"false", "true"}));
-
-    b.append("<br><input type='submit' value='start'>");
+    b.append("</tr>");
+    b.append("</table>");
+    b.append("<br><input value= 'Start' type='submit' class= 'large button green'/>");
+    b.append("</form>");
+    b.append("<form action='http://localhost:8181/automation-ios-logger/log' method='post'>");
+    b.append("<select multiple='multiple' name='log_options'>");
+    b.append("<option value='0'>INFO</option>");
+    b.append("<option value='1'>WARNING</option>");
+    b.append("<option value='2'>ERROR</option>");
+    b.append("<option value='3'>SUCCESS</option>");
+    b.append("</select>");
+    b.append("<input type='submit' value='Logging'/>");
     b.append("</form>");
     b.append("</body>");
     b.append("</html>");
@@ -99,13 +118,13 @@ public class BeginView implements View{
 
   private String select(String name, List<String> options) {
     StringBuilder b = new StringBuilder();
-    b.append("<br>" + name + "<select name='" + name + "', id = '" + name + "'>");
+    b.append("<td>" + name + "</td><td><select name='" + name + "', id = '" + name + "'>");
     boolean first = true;
     for (String option : options) {
       if(IOSCapabilities.AUT.equals(name)){
         String[] tmp = option.split("/");
         if(first){
-          b.append("<br><option value= '" + option + "', selected = '" + option + "'>" + tmp[tmp.length-1] + "</option>");
+          b.append("<option value= '" + option + "', selected = '" + option + "'>" + tmp[tmp.length-1] + "</option>");
           first = false;
         }
         else{
@@ -116,7 +135,7 @@ public class BeginView implements View{
         b.append("<br><option>" + option + "</option>");
       }
     }
-    b.append("<br></select>");
+    b.append("</select></td>");
     return b.toString();
 
   }

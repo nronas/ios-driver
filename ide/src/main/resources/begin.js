@@ -2,11 +2,18 @@ $(document).ready(function() {
 	$("#aut").change(function() {
 		var app_path = $("#aut option:selected")[0].value;
 		getLanguages(app_path);
+		$("#message.notice.message").fadeOut("slow");
+		$("#message.notice.message").html("Successfully update selected app!");
+		$("#message.notice.message").fadeIn("slow");
 
 	});
 
 	getLanguages($("#aut option:selected")[0].value);
-
+	
+	$("#message").click(function(){
+		$(this).fadeOut("slow");
+	});
+	
 	function getLanguages(path) {
 		$.get("/wd/hub/ide/getLanguages", {
 			app : path
@@ -20,7 +27,6 @@ $(document).ready(function() {
 			}
 
 			var langs = JSON.parse(data);
-			console.log(langs.length);
 			for ( var i = 0; i < langs.length; i++) {
 				language_selector.options[i] = new Option(langs[i], langs[i]);
 			}
