@@ -37,8 +37,11 @@ public class BeginController extends BaseController {
   
 
   public View handle(HttpServletRequest req){
-    BeginView view = null;
+    BeginView view = null;    
     try {
+      if(req.getAttribute("loggingResponse") != null){
+        String logging_info = (String) req.getAttribute("loggingResponse");
+      }
       view = new BeginView(new CustomMessage("Successfully load the resources!", "notice"), config.getSupportedApps());
     } catch (IOSAutomationException e1) {
         // e.printStackTrace();
