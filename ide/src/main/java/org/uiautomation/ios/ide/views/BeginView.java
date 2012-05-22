@@ -85,7 +85,7 @@ public class BeginView implements View{
     b.append("</table>");
     b.append("<br><input value= 'Start' type='submit' class= 'large button green'/>");
     b.append("</form>");
-    b.append("<form action='http://localhost:8181/automation-ios-logger/log' method='post'>");
+    b.append("<form action='http://localhost:8181/automation-ios-logger/session' method='post'>");
     b.append("<select multiple='multiple' name='log_options'>");
     b.append("<option value='0'>INFO</option>");
     b.append("<option value='1'>WARNING</option>");
