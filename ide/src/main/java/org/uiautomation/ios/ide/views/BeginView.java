@@ -24,25 +24,33 @@ import org.uiautomation.ios.IOSCapabilities;
 import org.uiautomation.ios.communication.IOSDevice;
 import org.uiautomation.ios.exceptions.IOSAutomationException;
 import org.uiautomation.ios.server.instruments.ClassicCommands;
-import org.uiautomation.ios.server.servlet.CustomMessage;
+import org.uiautomation.ios.server.servlet.Message;
+import org.uiautomation.ios.server.servlet.MessageList;
 
-public class BeginView implements View{
+public class BeginView extends MainHeader implements View{
 
   private List<String> supportedApps = new ArrayList<String>();
-  private CustomMessage msg = null;
-  public BeginView( CustomMessage msg, String... apps) throws IOSAutomationException {
+  private MessageList msgList = null;
+  private String[] params = null;
+  private String sessionId = null;
+  public BeginView( String sessionId, MessageList msgList, String... apps) throws IOSAutomationException {
     if (apps.length == 0) {
       throw new IOSAutomationException("no app specified.");
     }
-    this.msg = msg;
+    this.msgList = msgList;
+    this.sessionId = sessionId;
     supportedApps.addAll(Arrays.asList(apps));
   }
-  
-  public BeginView(CustomMessage msg){
-    this.msg= msg;
+
+  public BeginView(String sessionId, MessageList msgList){
+    this.msgList = msgList;
+    this.sessionId = sessionId;
   }
-
-
+  
+  public BeginView(String[] params){
+    this.params = params;
+  }
+  
   public void render(HttpServletResponse response) throws Exception {
     StringBuilder b = new StringBuilder();
     b.append("<html>");
@@ -53,12 +61,21 @@ public class BeginView implements View{
 
     b.append("</head>");
     b.append("<body>");
-    if(this.msg != null){
-      if(this.msg.getType().equals("error")){
-        b.append("<div class = 'error message' id='message'>"+ msg.getMessage() +"</div>");
-      }
-      else if(this.msg.getType().equals("notice")){
-        b.append("<div class = 'notice message' id='message'>"+ msg.getMessage() +"</div>");
+    b.append(this.renderHeaderPartial());
+    if(this.msgList != null){
+      for(Object msg : msgList.getMessages()){
+        if(((Message) msg).getMessageType().equals("error")){
+          b.append("<div class = 'error message' id='message'>"+ ((Message) msg).getMessageBody() +"</div>");
+        }
+        else if(((Message) msg).getMessageType().equals("success")){
+          b.append("<div class = 'success message' id='message'>"+ ((Message) msg).getMessageBody() +"</div>");
+        }
+        else if(((Message) msg).getMessageType().equals("info")){
+          b.append("<div class = 'info message' id='message'>"+ ((Message) msg).getMessageBody() +"</div>");
+        }
+        else if(((Message) msg).getMessageType().equals("warning")){
+          b.append("<div class = 'warning message' id='message'>"+ ((Message) msg).getMessageBody() +"</div>");
+        }
       }
     }
     b.append("<br />");
@@ -85,15 +102,25 @@ public class BeginView implements View{
     b.append("</table>");
     b.append("<br><input value= 'Start' type='submit' class= 'large button green'/>");
     b.append("</form>");
-    b.append("<form action='http://localhost:8181/automation-ios-logger/session' method='post'>");
+    b.append("<form action='http://localhost:8181/session/log' method='post'>");
     b.append("<select multiple='multiple' name='HashOptions'>");
     b.append("<option value='0'>INFO</option>");
     b.append("<option value='1'>WARNING</option>");
     b.append("<option value='2'>ERROR</option>");
     b.append("<option value='3'>SUCCESS</option>");
     b.append("</select>");
+    b.append("<br />");
+    b.append("<input type='hidden' value='"+getSessionId()+"' name='sessionId'>");
     b.append("<input type='submit' value='Logging'/>");
     b.append("</form>");
+    b.append("<br />");
+    b.append("<form action='http://localhost:8181/session/"+getSessionId()+"/log' method='get'>");
+    b.append("<input type='submit' value='Get Logs' />");
+    b.append("</form>");
+    b.append("<form action='http://localhost:8181/session/"+getSessionId()+"/log' method='post'>");
+    b.append("<input type='submit' value='Destroy Log' />");
+    b.append("</form>");
+    b.append("<br />");
     b.append("</body>");
     b.append("</html>");
 
@@ -102,7 +129,7 @@ public class BeginView implements View{
     response.setContentType("text/html");
     response.setCharacterEncoding("UTF-8");
     response.setStatus(200);
-    
+    msgList.clear();
     response.getWriter().print(b.toString());
   }
 
@@ -163,6 +190,9 @@ public class BeginView implements View{
     return res;
   }
 
+  private String getSessionId(){
+   return this.sessionId;
+  }
   public static void main(String[] args) {
     for (Locale l : Locale.getAvailableLocales()) {
       System.out.println(l);

@@ -14,10 +14,11 @@
 package org.uiautomation.ios.ide.controllers;
 
 import org.uiautomation.ios.ide.Model;
+import org.uiautomation.ios.server.servlet.MessageList;
 
 
 
-public abstract class BaseController implements IDECommandController {
+public abstract class BaseController extends MessageList implements IDECommandController {
 
   private final Model model;
 
@@ -28,4 +29,5 @@ public abstract class BaseController implements IDECommandController {
   protected Model getModel() {
     return model;
   }
+  
 }

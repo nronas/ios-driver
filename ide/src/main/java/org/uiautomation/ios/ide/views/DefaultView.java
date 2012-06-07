@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.uiautomation.ios.exceptions.IOSAutomationException;
 import org.uiautomation.ios.ide.Model;
+import org.uiautomation.ios.server.servlet.Message;
 
 public class DefaultView implements View {
 
@@ -56,7 +57,7 @@ public class DefaultView implements View {
 
       b.append("<div id ='details'>details</div>");
 
-      b.append("<div id = 'notice'>" + this.renderPartial() + "</div>");
+      b.append("<div id ='notice'>"+this.renderPartial()+"</div>");
 
       b.append("<div id ='actions'>actions");
       b.append("<form action='tap' method='GET'>");
@@ -89,15 +90,34 @@ public class DefaultView implements View {
     } catch (Exception e) {
       throw new IOSAutomationException(e);
     }
-
+    
   }
   
   public String renderPartial(){
     StringBuilder b = new StringBuilder();
     b.append("<div>");
-    b.append("<ul>");
-    b.append("<li>HELLLO NOTIFICATION CENTER</li>");
-    b.append("</ul>");
+    if(model.getApplication().getMessages() != null){
+      for(Object msg : model.getApplication().getMessages()){
+        if(((Message) msg).getMessageType().equals("error")){
+          b.append("<div class = 'error message' id='message'>"+ ((Message) msg).getMessageBody() +"</div>");
+        }
+        else if(((Message) msg).getMessageType().equals("success")){
+          b.append("<div class = 'success message' id='message'>"+ ((Message) msg).getMessageBody() +"</div>");
+        }
+        else if(((Message) msg).getMessageType().equals("info")){
+          b.append("<div class = 'info message' id='message'>"+ ((Message) msg).getMessageBody() +"</div>");
+        }
+        else if(((Message) msg).getMessageType().equals("warning")){
+          b.append("<div class = 'warning message' id='message'>"+ ((Message) msg).getMessageBody() +"</div>");
+        }
+      }
+    }
+    b.append("<form action='http://localhost:8181/session/"+model.getDriver().getSession().getSessionId()+"/log' method='get'>");
+    b.append("<input type='submit' value='Get Logs' />");
+    b.append("</form>");
+    b.append("<form action='http://localhost:8181/session/"+model.getDriver().getSession().getSessionId()+"/log' method='post'>");
+    b.append("<input type='submit' value='Destroy Logging' />");
+    b.append("</form>");
     b.append("</div>");
     return b.toString();
   }

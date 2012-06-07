@@ -19,6 +19,7 @@ import org.uiautomation.ios.exceptions.IOSAutomationException;
 import org.uiautomation.ios.ide.Model;
 import org.uiautomation.ios.ide.views.DefaultView;
 import org.uiautomation.ios.ide.views.View;
+import org.uiautomation.ios.server.servlet.Message;
 
 public class NotImplementedIDEController extends BaseController {
 
@@ -33,6 +34,9 @@ public class NotImplementedIDEController extends BaseController {
 
 
   public View handle(HttpServletRequest req) throws IOSAutomationException {
+    if(req.getParameter("LoggingMsg") != null){
+      getModel().getApplication().addMessage(new Message(req.getParameter("LoggingMsg"), req.getParameter("LoggingMsgType")));
+    }
     System.err.println("no controller for that " + req.getPathInfo());
     return new DefaultView(getModel());
   }

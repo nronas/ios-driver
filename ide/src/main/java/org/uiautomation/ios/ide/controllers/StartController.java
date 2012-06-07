@@ -28,6 +28,7 @@ import org.uiautomation.ios.ide.views.View;
 import org.uiautomation.ios.server.application.IOSApplication;
 import org.uiautomation.ios.server.application.LanguageDictionary;
 import org.uiautomation.ios.server.application.Localizable;
+import org.uiautomation.ios.server.servlet.Message;
 
 
 public class StartController extends BaseController {
