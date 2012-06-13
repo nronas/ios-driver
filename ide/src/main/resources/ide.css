@@ -54,12 +54,21 @@
     width: 500px;
 }
 
-#notice{
+#notification-container{
 	position: absolute;
+	padding-left: 5px;
+	padding-top: 5px;
 	left: 800px;
 	top: 600px;
 	height: 200px;
-    width: 500px;
+    width: 495px;
+}
+
+body
+{
+	margin: 0 auto;
+	align: center;	
+    width: 960px;
 }
 
 .message
@@ -70,39 +79,39 @@
                                                         transparent 75%, transparent);
     box-shadow: inset 0 -1px 0 rgba(255,255,255,.4);
    	position: relative;
-   	left: 5px;
    	padding-bottom: 10px;
    	padding-top: 10px;
    	border-radius: 1px solid;
-   	border-radius: 1.5em;
+   	border-radius: 0.3em;
    	border-width: 1px;
    	border-style: solid;
     color: #fff;
     text-shadow: 0 1px 0 rgba(0,0,0,.5);
     font-family: Helvetica;
     font-size: 16px;
+    width: 100%;
 }
 
 
 .info{
 	background-color: #4ea5cd;
     border-color: #3b8eb5;
+	text-align: center;
 }
 
 .error{
-	padding-left: 5px;
-	width: 800px;
     background-color: #de4343;
 	border-color: #c43d3d;
+	text-align: center;
 }
 
 .warning{
+	text-align: center;
     background-color: #eaaf51;
 	border-color: #d99a36;
 }
 
-.notice{
-	width: 300px;
+.success{
 	text-align: center;
 	background-color: #61b832;
     border-color: #55a12c;
@@ -163,4 +172,17 @@ td
 	padding-top: 5px;
 	font-family: helvetica;
 	font-size: 18px;
+}
+
+#log-container
+{
+	position: relative;
+	top: -265px;
+	margin-left: 800px;
+	width: 300px;
+}
+
+#application-container
+{
+	margin-left: 10px;
 }

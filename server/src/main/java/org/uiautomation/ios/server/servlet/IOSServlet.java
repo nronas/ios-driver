@@ -29,7 +29,6 @@ import org.uiautomation.ios.communication.WebDriverLikeCommand;
 import org.uiautomation.ios.communication.WebDriverLikeRequest;
 import org.uiautomation.ios.communication.WebDriverLikeResponse;
 import org.uiautomation.ios.server.CommandMapping;
-import org.uiautomation.ios.server.application.IOSApplication;
 import org.uiautomation.ios.server.command.Handler;
 
 public class IOSServlet extends UIAScriptProxyBasedServlet {
@@ -73,10 +72,9 @@ public class IOSServlet extends UIAScriptProxyBasedServlet {
   private void process(HttpServletRequest request, HttpServletResponse response) throws Exception {
     WebDriverLikeRequest req = getRequest(request);
     WebDriverLikeResponse resp = getResponse(req);
-
+    
     response.setContentType("application/json;charset=UTF-8");
     response.setCharacterEncoding("UTF-8");
-
     // TODO implement the json protocol properly.
     if (req.getGenericCommand() == WebDriverLikeCommand.NEW_SESSION) {
       response.setStatus(301);

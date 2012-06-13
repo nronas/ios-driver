@@ -26,8 +26,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.uiautomation.ios.exceptions.IOSAutomationException;
+import org.uiautomation.ios.server.servlet.Message;
+import org.uiautomation.ios.server.servlet.MessageList;
 
-public class IOSApplication {
+public class IOSApplication extends MessageList{
 
   private final File app;
   private final Localizable currentLanguage;
@@ -44,6 +46,7 @@ public class IOSApplication {
       throws IOSAutomationException {
     this.app = new File(pathToApp);
     if (!app.exists()) {
+      addMessage(new Message(pathToApp + "isn't an IOS app.","ERROR"));
       throw new IOSAutomationException(pathToApp + "isn't an IOS app.");
     }
     this.currentLanguage = currentLanguage;
@@ -74,6 +77,7 @@ public class IOSApplication {
         return dict;
       }
     }
+    addMessage(new Message("Cannot find dictionary for " + language,"ERROR"));
     throw new IOSAutomationException("Cannot find dictionary for " + language);
   }
 
@@ -103,6 +107,7 @@ public class IOSApplication {
         JSONObject content = res.readContentFromBinaryFile(f);
         res.addJSONContent(content);
       } catch (Exception e) {
+        addMessage(new Message("error loading content for l10n","ERROR"));
         throw new IOSAutomationException("error loading content for l10n", e);
       }
 

@@ -113,6 +113,8 @@ public class IOSServer {
     return null;
   }
 
-
+  public IOSServerConfiguration getConfig(){
+    return this.config;
+  }
 
 }

@@ -19,6 +19,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.uiautomation.ios.server.ExternalRequest;
+
 public class UIAScriptProxyRegister extends UIAScriptProxyBasedServlet {
 
   private static final long serialVersionUID = 5134799845517204382L;
@@ -29,6 +31,10 @@ public class UIAScriptProxyRegister extends UIAScriptProxyBasedServlet {
       throws ServletException, IOException {
     try {
       getSessionsManager().getInstrumentManager().communicate().registerUIAScript();
+      
+      getServerConfig().addMessage(new Message("Successfully register UIAScript.", "success"));
+      ExternalRequest.makeRequest("POST", "http://localhost:8181/session/" + getServerConfig().getLogSessionId()+ "/log/add", getServerConfig());
+      
     } catch (Exception e) {
       // TODO Auto-generated catch block
       e.printStackTrace();

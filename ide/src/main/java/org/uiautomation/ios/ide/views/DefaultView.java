@@ -22,7 +22,7 @@ import org.uiautomation.ios.server.servlet.Message;
 public class DefaultView implements View {
 
   private final Model model;
-
+  
   public DefaultView(Model model) {
     this.model = model;
   }
@@ -57,7 +57,7 @@ public class DefaultView implements View {
 
       b.append("<div id ='details'>details</div>");
 
-      b.append("<div id ='notice'>"+this.renderPartial()+"</div>");
+      b.append("<div id ='notification-container'>"+this.renderPartial()+"</div>");
 
       b.append("<div id ='actions'>actions");
       b.append("<form action='tap' method='GET'>");
@@ -81,11 +81,14 @@ public class DefaultView implements View {
       b.append("</html>");
 
 
-
       response.setContentType("text/html");
       response.setCharacterEncoding("UTF-8");
       response.setStatus(200);
-
+      
+      if(model.getApplication() != null && model.getApplication().getMessages().size() > 0){
+        model.getApplication().getMessages().clear();
+      }
+      
       response.getWriter().print(b.toString());
     } catch (Exception e) {
       throw new IOSAutomationException(e);
@@ -102,6 +105,9 @@ public class DefaultView implements View {
           b.append("<div class = 'error message' id='message'>"+ ((Message) msg).getMessageBody() +"</div>");
         }
         else if(((Message) msg).getMessageType().equals("success")){
+          if(((Message) msg).getMessageBody().equals("Successfully Quit logging.")){
+            model.setLogSessionId(null);
+          }
           b.append("<div class = 'success message' id='message'>"+ ((Message) msg).getMessageBody() +"</div>");
         }
         else if(((Message) msg).getMessageType().equals("info")){
@@ -112,12 +118,26 @@ public class DefaultView implements View {
         }
       }
     }
-    b.append("<form action='http://localhost:8181/session/"+model.getDriver().getSession().getSessionId()+"/log' method='get'>");
-    b.append("<input type='submit' value='Get Logs' />");
-    b.append("</form>");
-    b.append("<form action='http://localhost:8181/session/"+model.getDriver().getSession().getSessionId()+"/log' method='post'>");
-    b.append("<input type='submit' value='Destroy Logging' />");
-    b.append("</form>");
+    if(model.getLogSessionId() != null && model.getLogging()){
+      b.append("<form action='http://localhost:8181/session/"+model.getLogSessionId()+"/log' method='get'>");
+      b.append("<input type='submit' value='Get Logs' />");
+      b.append("</form>");
+      b.append("<form action='http://localhost:8181/session/"+model.getLogSessionId()+"/log' method='post'>");
+      b.append("<input type='submit' value='Destroy Logging' />");
+      b.append("</form>");
+    }
+    else{
+      b.append("<form action='http://localhost:8181/session/log' method='post'>");
+      b.append("<input type='checkbox' name='HashOptions' value='0' /> INFO <br />");
+      b.append("<input type='checkbox' name='HashOptions' value='1' /> WARNING <br />");
+      b.append("<input type='checkbox' name='HashOptions' value='2' /> ERROR <br />");
+      b.append("<input type='checkbox' name='HashOptions' value='3' /> SUCCESS <br />");
+      b.append("<br />");
+      b.append("<input type='hidden' value='"+model.getDriver().getSession().getSessionId()+"' name='sessionId'>");
+      b.append("<input type='submit' value='Logging'/>");
+      b.append("</form>");
+      model.setLogSessionId(model.getDriver().getSession().getSessionId());
+    }
     b.append("</div>");
     return b.toString();
   }

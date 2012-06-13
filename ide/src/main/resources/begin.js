@@ -1,16 +1,19 @@
-$(document).ready(function() {
+$(document).ready(function(){
+	
 	$("#aut").change(function() {
-		var app_path = $("#aut option:selected")[0].value;
+		var app_path = $("#aut option:selected").val();
 		getLanguages(app_path);
-		$("#message.notice.message").fadeOut("slow");
-		$("#message.notice.message").html("Successfully update selected app!");
-		$("#message.notice.message").fadeIn("slow");
+		$(".success.message").fadeOut("slow");
+		$(".success.message").html("Successfully update selected app!");
+		$(".success.message").fadeIn("slow");
 
 	});
-
-	getLanguages($("#aut option:selected")[0].value);
 	
-	$("#message").click(function(){
+	if($("#aut option:selected").val() != null){
+		getLanguages($("#aut option:selected").val());
+	}
+	
+	$(".message").click(function(){
 		$(this).fadeOut("slow");
 	});
 	

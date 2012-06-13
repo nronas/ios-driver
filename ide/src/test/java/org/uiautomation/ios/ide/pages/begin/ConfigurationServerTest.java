@@ -14,7 +14,8 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.uiautomation.ios.server.IOSServer;
 import org.uiautomation.ios.server.IOSServerConfiguration;
-import org.uiautomation.ios.server.servlet.CustomMessage;
+import org.uiautomation.ios.server.servlet.Message;
+import org.uiautomation.ios.server.servlet.MessageList;
 
 public class ConfigurationServerTest {
 
@@ -26,6 +27,7 @@ public class ConfigurationServerTest {
   private String requested_url = "http://" + host + ":" + config.getPort() + "/wd/hub/ide/begin";
   private String invalid_app_name = "invalid.app";
   private String valid_app_name = "UICatalog.app";
+  private static MessageList messages = new MessageList();
   
   private static final String APPS_FILE = "/supportedApps.txt"; // File to locate the app
   
@@ -125,11 +127,11 @@ public class ConfigurationServerTest {
       }
     }
     catch(Exception e){
-      throw new CustomMessage("Cannot load the resource "+resource,"error");
+       messages.addMessage(new Message("Cannot load the resource "+resource,"error"));
     }
     
     if (res == null || !res.exists()) {
-      throw new CustomMessage("Couldn't locate the file from "+ url.toString(),"error");
+      messages.addMessage(new Message("Couldn't locate the file from "+ url.toString(),"error"));
     }
     return res;
   }

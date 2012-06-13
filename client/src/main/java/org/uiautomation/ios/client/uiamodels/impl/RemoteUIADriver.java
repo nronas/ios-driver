@@ -22,7 +22,9 @@ import java.util.Map;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHttpEntityEnclosingRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -112,6 +114,7 @@ public class RemoteUIADriver implements UIADriver {
     WebDriverLikeResponse response = execute(request);
     String sessionId = response.getSessionId();
     Session session = new Session(sessionId);
+
     return session;
   }
 

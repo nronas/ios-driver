@@ -1,2 +1,3 @@
+eBay.app
 UICatalog.app
 InternationalMountains.app

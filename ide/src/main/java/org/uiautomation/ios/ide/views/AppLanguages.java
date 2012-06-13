@@ -26,8 +26,11 @@ import org.uiautomation.ios.communication.WebDriverLikeRequest;
 import org.uiautomation.ios.communication.WebDriverLikeResponse;
 import org.uiautomation.ios.exceptions.IOSAutomationException;
 import org.uiautomation.ios.ide.Model;
+import org.uiautomation.ios.server.ExternalRequest;
 import org.uiautomation.ios.server.application.IOSApplication;
 import org.uiautomation.ios.server.application.Localizable;
+import org.uiautomation.ios.server.servlet.Message;
+import org.uiautomation.ios.server.servlet.MessageList;
 
 public class AppLanguages implements View{
   private Model model = null;
@@ -50,6 +53,7 @@ public class AppLanguages implements View{
     for(Localizable l : lang){
       languages += l.getName() +"|";
     }
+    
     response.getWriter().write(languages);
   }
 }

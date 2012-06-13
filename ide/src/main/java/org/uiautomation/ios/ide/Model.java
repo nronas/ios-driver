@@ -15,21 +15,25 @@ package org.uiautomation.ios.ide;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
+import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.uiautomation.ios.UIAModels.UIADriver;
 import org.uiautomation.ios.client.uiamodels.impl.RemoteUIADriver;
 import org.uiautomation.ios.exceptions.IOSAutomationException;
+import org.uiautomation.ios.server.ExternalRequest;
 import org.uiautomation.ios.server.application.IOSApplication;
 
 public class Model {
   
   private RemoteUIADriver driver;
   private IOSApplication app;
-  
+  private String logSessionId = null;
   private JSONObject cache;
+  private boolean logging = false;
 
 
  
@@ -79,8 +83,20 @@ public class Model {
     if (d == null) {
       throw new IOSAutomationException("driver not active.");
     } else {
-      driver.quit();
-      driver = null;
+      try {
+        ExternalRequest.makeRequest("POST", "http://localhost:8181/session/" + getLogSessionId()+ "/log", null);
+      } 
+      catch (Exception e) {
+      }
+      finally{
+        if(this.getApplication() != null && this.getApplication().getMessages().size() > 0){
+          this.getApplication().getMessages().clear();
+        }
+        setLogging(false);
+        setLogSessionId(null);
+        driver.quit();
+        driver = null;
+      }
     }
 
   }
@@ -104,5 +120,19 @@ public class Model {
     
   }
 
-
+  public void setLogSessionId(String logSessionId){
+    this.logSessionId = logSessionId;
+  }
+  
+  public String getLogSessionId(){
+    return this.logSessionId;
+  }
+  
+  public void setLogging(boolean logging){
+    this.logging = logging;
+  }
+  
+  public boolean getLogging(){
+    return this.logging;
+  }
 }

@@ -1,3 +1,4 @@
+
 package org.uiautomation.ios.server;
 
 import java.lang.reflect.Constructor;
@@ -142,7 +143,6 @@ public enum CommandMapping {
         Object value = payload.opt(key);
         res = res.replace(":" + key, value.toString());
       }
-      
       
       
       return res;

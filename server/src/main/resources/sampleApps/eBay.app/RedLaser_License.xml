@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>-NOTICE-</key>
+	<string>THIS FILE IS DIGITALLY SIGNED. DO NOT MODIFY.</string>
+	<key>Company Name</key>
+	<string>eBay</string>
+	<key>iOS</key>
+	<dict>
+		<key>App Bundle IDs</key>
+		<array>
+			<string>com.ebay.iphone</string>
+			<string>com.ebay.core.ipad</string>
+		</array>
+	</dict>
+	
+</dict>
+</plist>
+-----BEGIN SIGNATURE-----
+QYFI1pEQFM2bbrneQ2Y9+9uqfrWs5sgfBmOQ0Ji2lgEBbgvgeliXRJ5iwtUoc6P6
+e8kzuLAzEAmIkfduhoF0HanKGCui/h0ly+qFKlpTOSra538Nwnlesori0Mzxf7Wm
+Eq3PjrswjYZa3+r32IjpRrbePdphgEG/LhnGsNXs9c9qEWM/uVPN+xrhRxdST1OS
+Xl9SVL0JwyrY/Bjs8aL2zr1Uo1yNZwAyK4Gk2lD/e3Th4bIF1sgpKUsf+q1Q4I8a
+Q9XOHX+UoSVwv3yQtpA9lynFu1QLXOzHH5E1FEIGr++cYekrt9LwAmlNo8t+Kze5
+yujjbfku2HNUgZC8SsbOjcylqZ+lnsUOkct1HWsAiCFCgYBtzXPzzdBnk5IGGhZd
+m3JFf1CbfYdIC18a3JNAxPMXFsZUyBNTCKXfcN1qPBeUX/BFv71uF9OkxM+eAbNs
+rRUOL6NKZSnvaZd1F5DQPoMf1AK98dmy+0fvhI59iTzgcLkpWmnTzcWg4Jxpsa29
+aSIIlNwJgC5RWDgspq8LMC9DDzCSLOLESXrExKMZFUperzH46thB56HXdC3TQRWs
+A2UjKUiYGFx53gFCfcpo5GJRhDu+7GdYlyy8XDuKxyV64g+7R3CAU4TV3GdKUTOw
+BJnTUWZSgrN1W10JxQ1nzV6kQOm4AXdX2pdAgRPiK84=
+-----END SIGNATURE-----

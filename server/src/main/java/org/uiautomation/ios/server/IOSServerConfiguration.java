@@ -22,7 +22,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 
-import org.uiautomation.ios.server.servlet.CustomMessage;
+import org.uiautomation.ios.server.servlet.Message;
+import org.uiautomation.ios.server.servlet.MessageList;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
@@ -36,7 +37,7 @@ import com.beust.jcommander.Parameter;
  * Generates and Throws a CustomMessage.class 'error' message Loading Success: Generates and Throws
  * a CustomMessage.class 'notice' message
  */
-public class IOSServerConfiguration {
+public class IOSServerConfiguration extends MessageList{
 
   private final String APPS_FILE = "/supportedApps.txt";
 
@@ -66,6 +67,10 @@ public class IOSServerConfiguration {
     return serverHost;
   }
 
+  //public IOSServerConfiguration(){
+  //  super();
+  //}
+  
   /**
    * Returns a IOSServerConfiguration instance of the server configuration, from the given args
    * parameters.<br>
@@ -82,7 +87,7 @@ public class IOSServerConfiguration {
     IOSServerConfiguration res = new IOSServerConfiguration();
     res.setHost(command_handler.getHost());
     res.setPort(command_handler.getPort());
-
+    
     return res;
   }
 
@@ -134,11 +139,11 @@ public class IOSServerConfiguration {
 
     res = new String[lines.size()];
     res = lines.toArray(res);
-
+    addMessage(new Message("Successfully load the resources! : [LOCATION] SERVER", "success"));
     return res;
   }
 
-  private static File getFromClassPath(String resource) throws Exception {
+  private File getFromClassPath(String resource) throws Exception {
     File res = null;
     URL url = null;
     try {
@@ -146,13 +151,29 @@ public class IOSServerConfiguration {
       if (url.toExternalForm().startsWith("file:")) {
         res = new File(url.toExternalForm().replace("file:", ""));
       }
-    } catch (Exception e) {
-      throw new CustomMessage("Cannot load the resource " + resource, "error");
+    } 
+    catch (Exception e) {
+      addMessage(new Message("Cannot load the resource " + resource + getLocalStackTrace(e), "error"));
+      throw new Exception();
     }
 
     if (res == null || !res.exists()) {
-      throw new CustomMessage("Couldn't locate the file from " + url.toString(), "error");
+      addMessage(new Message("Couldn't locate the file from " + url.toString(), "error"));
+      throw new Exception();
     }
+    return res;
+  }
+
+  private String getLocalStackTrace(Exception e) {
+    StackTraceElement[] exceptionBody = e.getStackTrace();
+    String res = "<ul>";
+    for(StackTraceElement i : exceptionBody){
+      String[] tmpSplitter = i.getClassName().split("\\.");
+      if(tmpSplitter[1].equals("uiautomation")){
+        res += "<li>"+ i.getClassName()+", "+i.getMethodName()+"("+i.getLineNumber()+")</li>";
+      }
+    }
+    res += "</ul>";
     return res;
   }
 
@@ -167,4 +188,12 @@ public class IOSServerConfiguration {
   public String getHost() {
     return this.serverHost;
   }
+
+  public void setLogSessionId(String logSessionId) {
+    this.logSessionId = logSessionId;  
+  }
+  
+  public String getLogSessionId(){
+    return this.logSessionId;
+  }  
 }

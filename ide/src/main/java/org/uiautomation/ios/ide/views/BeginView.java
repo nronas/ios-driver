@@ -33,12 +33,15 @@ public class BeginView extends MainHeader implements View{
   private MessageList msgList = null;
   private String[] params = null;
   private String sessionId = null;
-  public BeginView( String sessionId, MessageList msgList, String... apps) throws IOSAutomationException {
+  private boolean logging = false;
+  
+  public BeginView( String sessionId, boolean logging, MessageList msgList, String... apps) throws IOSAutomationException {
     if (apps.length == 0) {
       throw new IOSAutomationException("no app specified.");
     }
     this.msgList = msgList;
     this.sessionId = sessionId;
+    this.logging = logging;
     supportedApps.addAll(Arrays.asList(apps));
   }
 
@@ -62,6 +65,7 @@ public class BeginView extends MainHeader implements View{
     b.append("</head>");
     b.append("<body>");
     b.append(this.renderHeaderPartial());
+    b.append("<div id='main-container'>");
     if(this.msgList != null){
       for(Object msg : msgList.getMessages()){
         if(((Message) msg).getMessageType().equals("error")){
@@ -79,6 +83,7 @@ public class BeginView extends MainHeader implements View{
       }
     }
     b.append("<br />");
+    b.append("<div id='application-container'>");
     b.append("<form action='start' method='GET'>");
 
     b.append("<input  type='text' name='" + IOSCapabilities.DEVICE
@@ -102,28 +107,32 @@ public class BeginView extends MainHeader implements View{
     b.append("</table>");
     b.append("<br><input value= 'Start' type='submit' class= 'large button green'/>");
     b.append("</form>");
-    b.append("<form action='http://localhost:8181/session/log' method='post'>");
-    b.append("<select multiple='multiple' name='HashOptions'>");
-    b.append("<option value='0'>INFO</option>");
-    b.append("<option value='1'>WARNING</option>");
-    b.append("<option value='2'>ERROR</option>");
-    b.append("<option value='3'>SUCCESS</option>");
-    b.append("</select>");
-    b.append("<br />");
-    b.append("<input type='hidden' value='"+getSessionId()+"' name='sessionId'>");
-    b.append("<input type='submit' value='Logging'/>");
-    b.append("</form>");
-    b.append("<br />");
-    b.append("<form action='http://localhost:8181/session/"+getSessionId()+"/log' method='get'>");
-    b.append("<input type='submit' value='Get Logs' />");
-    b.append("</form>");
-    b.append("<form action='http://localhost:8181/session/"+getSessionId()+"/log' method='post'>");
-    b.append("<input type='submit' value='Destroy Log' />");
-    b.append("</form>");
-    b.append("<br />");
+    b.append("</div>");
+    b.append("<div id='log-container'>");
+    if(!getLogging()){
+      b.append("<p>Select your Log level(s).</p>");
+      b.append("<form action='http://localhost:8181/session/log' method='post'>");
+      b.append("<input type='checkbox' name='HashOptions' value='0' /> INFO <br />");
+      b.append("<input type='checkbox' name='HashOptions' value='1' /> WARNING <br />");
+      b.append("<input type='checkbox' name='HashOptions' value='2' /> ERROR <br />");
+      b.append("<input type='checkbox' name='HashOptions' value='3' /> SUCCESS <br />");
+      b.append("<br />");
+      b.append("<input type='hidden' value='"+getSessionId()+"' name='sessionId'>");
+      b.append("<input type='submit' value='Start logging' id='logging'/>");
+      b.append("</form>");
+    }
+    else{
+      b.append("<form action='http://localhost:8181/session/"+getSessionId()+"/log' method='get'>");
+      b.append("<input type='submit' value='Get Logs' id='getLogs' />");
+      b.append("</form>");
+      b.append("<form action='http://localhost:8181/session/"+getSessionId()+"/log' method='post'>");
+      b.append("<input type='submit' value='Destroy Logging' id='quitLogging'/>");
+      b.append("</form>");
+    }
+    b.append("</div>");
+    b.append("</div>");
     b.append("</body>");
     b.append("</html>");
-
 
 
     response.setContentType("text/html");
@@ -193,6 +202,11 @@ public class BeginView extends MainHeader implements View{
   private String getSessionId(){
    return this.sessionId;
   }
+  
+  private boolean getLogging(){
+    return this.logging;
+  }
+  
   public static void main(String[] args) {
     for (Locale l : Locale.getAvailableLocales()) {
       System.out.println(l);

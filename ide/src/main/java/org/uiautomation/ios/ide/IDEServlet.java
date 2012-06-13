@@ -21,6 +21,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.uiautomation.ios.communication.WebDriverLikeRequest;
+import org.uiautomation.ios.communication.WebDriverLikeResponse;
 import org.uiautomation.ios.ide.controllers.AttachController;
 import org.uiautomation.ios.ide.controllers.BeginController;
 import org.uiautomation.ios.ide.controllers.DebugController;
@@ -35,6 +37,7 @@ import org.uiautomation.ios.ide.controllers.UserActionController;
 import org.uiautomation.ios.ide.controllers.getLanguagesController;
 import org.uiautomation.ios.ide.views.JSTreeJSON;
 import org.uiautomation.ios.ide.views.View;
+import org.uiautomation.ios.server.ExternalRequest;
 import org.uiautomation.ios.server.servlet.UIAScriptProxyBasedServlet;
 
 
@@ -74,6 +77,11 @@ public class IDEServlet extends UIAScriptProxyBasedServlet {
     try {
       IDECommandController controller = getController(req.getPathInfo());
       View view = controller.handle(req);
+      if(model.getLogging() && model.getLogSessionId() == null){
+        model.setLogSessionId(req.getSession().getId());
+        getServerConfig().setLogSessionId(model.getLogSessionId());
+      }
+      ExternalRequest.makeRequest("POST", "http://localhost:8181/session/"+model.getLogSessionId()+"/log/add", getServerConfig());
       view.render(response);
     } catch (Exception e) {
       // TODO freynaud

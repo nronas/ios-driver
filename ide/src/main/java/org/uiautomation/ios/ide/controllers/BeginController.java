@@ -14,13 +14,13 @@
 package org.uiautomation.ios.ide.controllers;
 
 import javax.servlet.http.HttpServletRequest;
-
 import org.uiautomation.ios.exceptions.IOSAutomationException;
 import org.uiautomation.ios.ide.Model;
 import org.uiautomation.ios.ide.views.BeginView;
 import org.uiautomation.ios.ide.views.View;
 import org.uiautomation.ios.server.IOSServerConfiguration;
-import org.uiautomation.ios.server.servlet.CustomMessage;
+import org.uiautomation.ios.server.servlet.Message;
+import org.uiautomation.ios.server.servlet.MessageList;
 
 public class BeginController extends BaseController {
 
@@ -36,21 +36,27 @@ public class BeginController extends BaseController {
   }
   
 
-  public View handle(HttpServletRequest req){
-    BeginView view = null;    
-    try {
-      if(req.getAttribute("loggingResponse") != null){
-        String logging_info = (String) req.getAttribute("loggingResponse");
+  @SuppressWarnings("finally")
+  public View handle(HttpServletRequest req){   
+    BeginView view = null;
+ 
+    if(req.getParameter("LoggingMsg") != null){
+      config.addMessage(new Message(req.getParameter("LoggingMsg"), req.getParameter("LoggingMsgType")));
+      if(req.getParameter("logging") != null){
+        getModel().setLogging(Boolean.parseBoolean(req.getParameter("logging")));
       }
-      view = new BeginView(new CustomMessage("Successfully load the resources!", "notice"), config.getSupportedApps());
+    }
+    try {
+      view = new BeginView(req.getSession().getId(), getModel().getLogging(), config,config.getSupportedApps());
     } catch (IOSAutomationException e1) {
         // e.printStackTrace();
-    } catch (CustomMessage ex) {
-      view = new BeginView(ex);
-    } catch (Exception e2) {
-        // TODO Auto-generated catch block
-      e2.printStackTrace();
     }
-    return view;
+    catch (Exception e2) {
+      view = new BeginView(getModel().getLogSessionId(), config);
+      //e2.printStackTrace();
+    }
+    finally{
+      return view;
+    }
   }
 }
