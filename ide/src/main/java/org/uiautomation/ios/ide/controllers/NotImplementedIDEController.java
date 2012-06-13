@@ -51,6 +51,7 @@ public class NotImplementedIDEController extends BaseController {
     if(req.getParameter("options") != null){
       getModel().setOptions(req.getParameter("options").split(","));
     }
+    
     System.err.println("no controller for that " + req.getPathInfo());
     return new DefaultView(getModel());
   }

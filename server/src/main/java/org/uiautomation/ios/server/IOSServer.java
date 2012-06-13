@@ -114,7 +114,7 @@ public class IOSServer {
   }
 
   public IOSServerConfiguration getConfig(){
-    return this.config;
+    return this.options;
   }
 
 }

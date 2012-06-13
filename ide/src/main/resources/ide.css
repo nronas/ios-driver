@@ -185,6 +185,7 @@ td
 #application-container
 {
 	margin-left: 10px;
+<<<<<<< HEAD
 }
 
 #update-logs-container
@@ -192,4 +193,6 @@ td
 	position: relative;
 	bottom: 140px;
 	left: 200px;
+=======
+>>>>>>> rebase and update the whole project
 }

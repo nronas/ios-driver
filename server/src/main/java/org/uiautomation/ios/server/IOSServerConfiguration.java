@@ -40,6 +40,7 @@ import com.beust.jcommander.Parameter;
 public class IOSServerConfiguration extends MessageList{
 
   private final String APPS_FILE = "/supportedApps.txt";
+  private String logSessionId = null;
 
   @Parameter(description = "port the server will listen on.", names = "-port")
   private int port = 5555;
@@ -195,5 +196,5 @@ public class IOSServerConfiguration extends MessageList{
   
   public String getLogSessionId(){
     return this.logSessionId;
-  }  
+  } 
 }
