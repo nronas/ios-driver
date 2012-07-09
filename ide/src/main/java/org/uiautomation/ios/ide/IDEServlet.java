@@ -74,6 +74,7 @@ public class IDEServlet extends UIAScriptProxyBasedServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse response) throws IOException {
     response.setCharacterEncoding("UTF-8");
+    response.addHeader("Access-Control-Allow-Origin", "http://localhost:8181");
     try {
       IDECommandController controller = getController(req.getPathInfo());
       View view = controller.handle(req);
@@ -81,7 +82,14 @@ public class IDEServlet extends UIAScriptProxyBasedServlet {
         model.setLogSessionId(req.getSession().getId());
         getServerConfig().setLogSessionId(model.getLogSessionId());
       }
-      ExternalRequest.makeRequest("POST", "http://localhost:8181/session/"+model.getLogSessionId()+"/log/add", getServerConfig());
+      else if(model.getLogging()){
+        if(req.getParameter("partLogging") != null){
+          model.setPartLogging(Boolean.parseBoolean(req.getParameter("partLogging")));
+        }
+        if(model.getPartLogging()){
+          ExternalRequest.makeRequest("POST", "http://localhost:8181/session/"+model.getLogSessionId()+"/log/add", getServerConfig());
+        }
+      }
       view.render(response);
     } catch (Exception e) {
       // TODO freynaud

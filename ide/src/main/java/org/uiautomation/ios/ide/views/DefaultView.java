@@ -35,6 +35,8 @@ public class DefaultView implements View {
 
       b.append(" <link rel='stylesheet' href='" + getResource("ide.css") + "'  type='text/css'/>");
       b.append("<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'></script>");
+      b.append("<script src='" + getResource("iphone-style-checkboxes.js") + "' type='text/javascript'></script>");
+      b.append("<link rel='stylesheet' href='" + getResource("style.css") + "' type='text/css' media='screen' />");
       b.append("<script type='text/javascript' src='" + getResource("jquery.jstree.js")
           + "'></script>");
       b.append("<script type='text/javascript' src='" + getResource("ide.js") + "'></script>");
@@ -125,6 +127,12 @@ public class DefaultView implements View {
       b.append("<form action='http://localhost:8181/session/"+model.getLogSessionId()+"/log' method='post'>");
       b.append("<input type='submit' value='Destroy Logging' />");
       b.append("</form>");
+      if(model.getPartLogging()){
+        b.append("<div class='on_off' session='" + model.getLogSessionId() + "'> Part-Logging: <input type='checkbox' id='on_off' checked='checked'/> </div>");
+      }
+      else{
+        b.append("<div class='on_off' session='" + model.getLogSessionId() + "'> Part-Logging: <input type='checkbox' id='on_off'/> </div>");
+      }
     }
     else{
       b.append("<form action='http://localhost:8181/session/log' method='post'>");

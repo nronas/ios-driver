@@ -34,6 +34,7 @@ public class Model {
   private String logSessionId = null;
   private JSONObject cache;
   private boolean logging = false;
+  private boolean partLogging = false;
 
 
  
@@ -134,5 +135,13 @@ public class Model {
   
   public boolean getLogging(){
     return this.logging;
+  }
+  
+  public boolean getPartLogging(){
+    return this.partLogging;
+  }
+  
+  public void setPartLogging(boolean partLogging){
+    this.partLogging = partLogging;
   }
 }

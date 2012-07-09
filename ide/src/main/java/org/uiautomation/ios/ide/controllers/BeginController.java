@@ -44,6 +44,7 @@ public class BeginController extends BaseController {
       config.addMessage(new Message(req.getParameter("LoggingMsg"), req.getParameter("LoggingMsgType")));
       if(req.getParameter("logging") != null){
         getModel().setLogging(Boolean.parseBoolean(req.getParameter("logging")));
+        getModel().setPartLogging(Boolean.parseBoolean(req.getParameter("logging")));
       }
     }
     try {

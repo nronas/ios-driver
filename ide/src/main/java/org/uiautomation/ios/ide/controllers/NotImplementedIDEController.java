@@ -42,9 +42,12 @@ public class NotImplementedIDEController extends BaseController {
       getModel().getApplication().addMessage(new Message(req.getParameter("LoggingMsg"), req.getParameter("LoggingMsgType")));
       if(req.getParameter("logging") != null){
         getModel().setLogging(Boolean.parseBoolean(req.getParameter("logging")));
+        getModel().setPartLogging(Boolean.parseBoolean(req.getParameter("logging")));
+      }
+      if(req.getParameter("partLogging") != null){
+        getModel().setPartLogging(Boolean.parseBoolean(req.getParameter("partLogging")));
       }
     }
-    
     System.err.println("no controller for that " + req.getPathInfo());
     return new DefaultView(getModel());
   }

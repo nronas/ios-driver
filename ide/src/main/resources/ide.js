@@ -1,7 +1,18 @@
 $(document)
 		.ready(
 				function() {
-
+					
+					if($('.on_off :checkbox') != null){
+						$('.on_off :checkbox').iphoneStyle();
+						$('.iPhoneCheckContainer').click(function(){
+							$.ajax({
+								  url: "http://localhost:8181/session/" + $(".on_off").attr("session") + "/log/start_stop",
+								  headers: {"Access-Control-Allow-Origin" : "http://localhost:8181"},
+								  success: function(data){window.location = data;}
+							});
+						});
+					}
+					
 					var offsetX = 49;
 					var offsetY = 143;
 
