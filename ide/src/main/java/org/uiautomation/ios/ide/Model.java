@@ -145,7 +145,7 @@ public class Model {
   public void setPartLogging(boolean partLogging){
     this.partLogging = partLogging;
   }
-  
+    
   public void setOptions(String[] options){
     this.options = new String[options.length];
     System.arraycopy( options, 0, this.options, 0, options.length );
