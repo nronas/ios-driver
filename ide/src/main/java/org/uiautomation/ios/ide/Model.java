@@ -35,6 +35,7 @@ public class Model {
   private JSONObject cache;
   private boolean logging = false;
   private boolean partLogging = false;
+  private String[] options = null;
 
 
  
@@ -143,5 +144,14 @@ public class Model {
   
   public void setPartLogging(boolean partLogging){
     this.partLogging = partLogging;
+  }
+  
+  public void setOptions(String[] options){
+    this.options = new String[options.length];
+    System.arraycopy( options, 0, this.options, 0, options.length );
+  }
+  
+  public String[] getOptions(){
+    return this.options;
   }
 }

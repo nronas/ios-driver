@@ -34,20 +34,29 @@ public class BeginView extends MainHeader implements View{
   private String[] params = null;
   private String sessionId = null;
   private boolean logging = false;
+  private String[] options = null;
   
-  public BeginView( String sessionId, boolean logging, MessageList msgList, String... apps) throws IOSAutomationException {
+  public BeginView(String[] options, String sessionId, boolean logging, MessageList msgList, String... apps) throws IOSAutomationException {
     if (apps.length == 0) {
       throw new IOSAutomationException("no app specified.");
     }
     this.msgList = msgList;
     this.sessionId = sessionId;
     this.logging = logging;
+    if(options != null){
+      this.options = new String[options.length];
+      System.arraycopy( options, 0, this.options, 0, options.length );
+    }
     supportedApps.addAll(Arrays.asList(apps));
   }
 
-  public BeginView(String sessionId, MessageList msgList){
+  public BeginView(String[] options, String sessionId, MessageList msgList){
     this.msgList = msgList;
     this.sessionId = sessionId;
+    if(options != null){
+      this.options = new String[options.length];
+      System.arraycopy( options, 0, this.options, 0, options.length );
+    }
   }
   
   public BeginView(String[] params){
@@ -127,6 +136,35 @@ public class BeginView extends MainHeader implements View{
       b.append("</form>");
       b.append("<form action='http://localhost:8181/session/"+getSessionId()+"/log' method='post'>");
       b.append("<input type='submit' value='Destroy Logging' id='quitLogging'/>");
+      b.append("</form>");
+      b.append("<form action='http://localhost:8181/session/"+getSessionId()+"/log/update' method='post'>");
+      b.append("<p>Update your logging options</p>");
+      if(Arrays.asList(options).contains("0")){
+        b.append("<input type='checkbox' name='HashOptions' value='0'  checked='checked'  /> INFO <br />");
+      }
+      else{
+        b.append("<input type='checkbox' name='HashOptions' value='0' /> INFO <br />");
+      }
+      if(Arrays.asList(options).contains("1")){
+        b.append("<input type='checkbox' name='HashOptions' value='1' checked='checked' /> WARNING <br />");
+      }
+      else{
+        b.append("<input type='checkbox' name='HashOptions' value='1' /> WARNING <br />");
+      }
+      if(Arrays.asList(options).contains("2")){
+        b.append("<input type='checkbox' name='HashOptions' value='2' checked='checked' /> ERROR <br />");
+      }
+      else{
+        b.append("<input type='checkbox' name='HashOptions' value='2' /> ERROR <br />");
+      }
+      if(Arrays.asList(options).contains("3")){
+        b.append("<input type='checkbox' name='HashOptions' value='3' checked='checked' /> SUCCESS <br />");
+      }
+      else{
+        b.append("<input type='checkbox' name='HashOptions' value='3' /> SUCCESS <br />");
+      }
+      b.append("<input type='hidden' value='"+getSessionId()+"' name='sessionId'/>");
+      b.append("<input type='submit' value='Update'>");
       b.append("</form>");
     }
     b.append("</div>");

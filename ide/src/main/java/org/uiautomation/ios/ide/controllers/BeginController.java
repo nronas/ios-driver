@@ -47,13 +47,16 @@ public class BeginController extends BaseController {
         getModel().setPartLogging(Boolean.parseBoolean(req.getParameter("logging")));
       }
     }
+    if(req.getParameter("options") != null){
+      getModel().setOptions(req.getParameter("options").split(","));
+    }
     try {
-      view = new BeginView(req.getSession().getId(), getModel().getLogging(), config,config.getSupportedApps());
+      view = new BeginView(getModel().getOptions(), req.getSession().getId(), getModel().getLogging(), config,config.getSupportedApps());
     } catch (IOSAutomationException e1) {
         // e.printStackTrace();
     }
     catch (Exception e2) {
-      view = new BeginView(getModel().getLogSessionId(), config);
+      view = new BeginView(getModel().getOptions(), getModel().getLogSessionId(), config);
       //e2.printStackTrace();
     }
     finally{

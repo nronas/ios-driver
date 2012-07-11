@@ -186,3 +186,10 @@ td
 {
 	margin-left: 10px;
 }
+
+#update-logs-container
+{
+	position: relative;
+	bottom: 140px;
+	left: 200px;
+}

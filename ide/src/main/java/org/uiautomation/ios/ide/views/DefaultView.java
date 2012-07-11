@@ -13,6 +13,8 @@
  */
 package org.uiautomation.ios.ide.views;
 
+import java.util.Arrays;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.uiautomation.ios.exceptions.IOSAutomationException;
@@ -133,6 +135,37 @@ public class DefaultView implements View {
       else{
         b.append("<div class='on_off' session='" + model.getLogSessionId() + "'> Part-Logging: <input type='checkbox' id='on_off'/> </div>");
       }
+      b.append("<div id='update-logs-container'>");
+      b.append("<form action='http://localhost:8181/session/"+model.getLogSessionId()+"/log/update' method='post'>");
+      b.append("<p>Update your logging options</p>");
+      if(Arrays.asList(model.getOptions()).contains("0")){
+        b.append("<input type='checkbox' name='HashOptions' value='0'  checked='checked'  /> INFO <br />");
+      }
+      else{
+        b.append("<input type='checkbox' name='HashOptions' value='0' /> INFO <br />");
+      }
+      if(Arrays.asList(model.getOptions()).contains("1")){
+        b.append("<input type='checkbox' name='HashOptions' value='1' checked='checked' /> WARNING <br />");
+      }
+      else{
+        b.append("<input type='checkbox' name='HashOptions' value='1' /> WARNING <br />");
+      }
+      if(Arrays.asList(model.getOptions()).contains("2")){
+        b.append("<input type='checkbox' name='HashOptions' value='2' checked='checked' /> ERROR <br />");
+      }
+      else{
+        b.append("<input type='checkbox' name='HashOptions' value='2' /> ERROR <br />");
+      }
+      if(Arrays.asList(model.getOptions()).contains("3")){
+        b.append("<input type='checkbox' name='HashOptions' value='3' checked='checked' /> SUCCESS <br />");
+      }
+      else{
+        b.append("<input type='checkbox' name='HashOptions' value='3' /> SUCCESS <br />");
+      }
+      b.append("<input type='hidden' value='" + model.getLogSessionId() + "' name='sessionId'/>");
+      b.append("<input type='submit' value='Update'>");
+      b.append("</form>");
+      b.append("</div>");
     }
     else{
       b.append("<form action='http://localhost:8181/session/log' method='post'>");
