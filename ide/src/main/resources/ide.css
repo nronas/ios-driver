@@ -152,6 +152,15 @@ body
 .green.button, .green.button:visited{ background-color: #91bd09; }
 .green.button:hover{ background-color: #749a02; }
 
+.blue.button, .blue.button:visited{ background-color: #0000FF; }
+.blue.button:hover{ background-color: #0000A0; }
+
+.yellow.button, .yellow.button:visited{ background-color: #EAC117; }
+.yellow.button:hover{ background-color: #AF7817; }
+
+.red.button, .red.button:visited{ background-color: #FF0000; }
+.red.button:hover{ background-color: #C11B17; }
+
 .text-field
 {
 	font-size: 1em;
@@ -178,14 +187,13 @@ td
 {
 	position: relative;
 	top: -265px;
-	margin-left: 800px;
+	margin-left: 750px;
 	width: 300px;
 }
 
 #application-container
 {
 	margin-left: 10px;
-<<<<<<< HEAD
 }
 
 #update-logs-container
@@ -193,6 +201,50 @@ td
 	position: relative;
 	bottom: 140px;
 	left: 200px;
-=======
->>>>>>> rebase and update the whole project
+	font-family: Helvetica;
+	font-size: 18px;
+}
+
+#quitLogging
+{
+	position: absolute;
+	top: 0px;
+	left: 80px;
+	z-index: 3;
+}
+
+#update-logs-container-ide
+{
+	position: relative;
+	bottom: 10px;
+	left: -15px;
+	font-family: Helvetica;
+	font-size: 18px;
+}
+
+#getLogs
+{
+	position: relative;
+}
+
+#log-actions-container
+{
+	position: relative;
+	left: -17px;
+}
+
+#update-logs-container-ide form input, #log-options form input
+{
+	margin-top: 10px;
+}
+
+#log-options, #log-options-default-view
+{
+	font-family: Helvetica;
+	font-size: 18px;
+}
+
+#log-options-default-view form input
+{
+	margin-top: 10px;
 }

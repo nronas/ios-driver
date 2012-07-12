@@ -77,7 +77,6 @@ public class IDEServlet extends UIAScriptProxyBasedServlet {
     response.addHeader("Access-Control-Allow-Origin", "http://localhost:8181");
     try {
       IDECommandController controller = getController(req.getPathInfo());
-      View view = controller.handle(req);
       if(model.getLogging() && model.getLogSessionId() == null){
         model.setLogSessionId(req.getSession().getId());
         getServerConfig().setLogSessionId(model.getLogSessionId());
@@ -90,6 +89,7 @@ public class IDEServlet extends UIAScriptProxyBasedServlet {
           ExternalRequest.makeRequest("POST", "http://localhost:8181/session/"+model.getLogSessionId()+"/log/add", getServerConfig());
         }
       }
+      View view = controller.handle(req);
       view.render(response);
     } catch (Exception e) {
       // TODO freynaud

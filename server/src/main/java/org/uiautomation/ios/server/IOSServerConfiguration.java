@@ -49,7 +49,7 @@ public class IOSServerConfiguration extends MessageList{
   private String registrationURL = null;
 
   @Parameter(description = "location of the application under test.Absolute path expected.", names = {
-      "-app", "-aut"}, required = true)
+      "-app", "-aut"}, required = false)
   private String absoluteAppPath;
 
   @Parameter(description = "host of the node.Needs to be specified, as guessing can be wrong complex ntw configs", names = "-host")

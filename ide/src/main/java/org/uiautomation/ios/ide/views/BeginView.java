@@ -119,53 +119,59 @@ public class BeginView extends MainHeader implements View{
     b.append("</div>");
     b.append("<div id='log-container'>");
     if(!getLogging()){
-      b.append("<p>Select your Log level(s).</p>");
+      b.append("<div id='log-options'>");
+      b.append("Select your Log level(s).");
       b.append("<form action='http://localhost:8181/session/log' method='post'>");
-      b.append("<input type='checkbox' name='HashOptions' value='0' /> INFO <br />");
-      b.append("<input type='checkbox' name='HashOptions' value='1' /> WARNING <br />");
-      b.append("<input type='checkbox' name='HashOptions' value='2' /> ERROR <br />");
-      b.append("<input type='checkbox' name='HashOptions' value='3' /> SUCCESS <br />");
-      b.append("<br />");
+      b.append("<input type='checkbox' name='HashOptions' value='0' id='INFO'/> <label for='INFO'>INFO </label><br />");
+      b.append("<input type='checkbox' name='HashOptions' value='1' id='WARNING'/> <label for='WARNING'>WARNING </label><br />");
+      b.append("<input type='checkbox' name='HashOptions' value='2' id='ERROR'/> <label for='ERROR'>ERROR </label><br />");
+      b.append("<input type='checkbox' name='HashOptions' value='3' id='SUCCESS'/> <label for='SUCCESS'>SUCCESS </label><br />");
       b.append("<input type='hidden' value='"+getSessionId()+"' name='sessionId'>");
-      b.append("<input type='submit' value='Start logging' id='logging'/>");
+      b.append("<input type='submit' value='Start logging' id='logging' class='button blue'/>");
       b.append("</form>");
+      b.append("</div>");
     }
     else{
+      b.append("<div id='log-actions-container'>");
       b.append("<form action='http://localhost:8181/session/"+getSessionId()+"/log' method='get'>");
-      b.append("<input type='submit' value='Get Logs' id='getLogs' />");
+      b.append("<input type='submit' value='Get Logs' id='getLogs' class='button yellow'/>");
       b.append("</form>");
       b.append("<form action='http://localhost:8181/session/"+getSessionId()+"/log' method='post'>");
-      b.append("<input type='submit' value='Destroy Logging' id='quitLogging'/>");
+      b.append("<input type='submit' value='Destroy Logging' id='quitLogging' class='button red'/>");
       b.append("</form>");
+      b.append("</div>");
+      b.append("<div id='update-logs-container-ide'>");
       b.append("<form action='http://localhost:8181/session/"+getSessionId()+"/log/update' method='post'>");
-      b.append("<p>Update your logging options</p>");
+      b.append("Update your logging options");
+      b.append("<br />");
       if(Arrays.asList(options).contains("0")){
-        b.append("<input type='checkbox' name='HashOptions' value='0'  checked='checked'  /> INFO <br />");
+        b.append("<input type='checkbox' name='HashOptions' value='0'  checked='checked'  id='INFO'/> <label for='INFO'>INFO </label> <br />");
       }
       else{
-        b.append("<input type='checkbox' name='HashOptions' value='0' /> INFO <br />");
+        b.append("<input type='checkbox' name='HashOptions' value='0' id='INFO'/> <label for='INFO'>INFO </label> <br />");
       }
       if(Arrays.asList(options).contains("1")){
-        b.append("<input type='checkbox' name='HashOptions' value='1' checked='checked' /> WARNING <br />");
+        b.append("<input type='checkbox' name='HashOptions' value='1' checked='checked' id='WARNING'/> <label for='WARNING'>WARNING </label><br />");
       }
       else{
-        b.append("<input type='checkbox' name='HashOptions' value='1' /> WARNING <br />");
+        b.append("<input type='checkbox' name='HashOptions' value='1' id='WARNING'/> <label for='WARNING'>WARNING</label> <br />");
       }
       if(Arrays.asList(options).contains("2")){
-        b.append("<input type='checkbox' name='HashOptions' value='2' checked='checked' /> ERROR <br />");
+        b.append("<input type='checkbox' name='HashOptions' value='2' checked='checked' id='ERROR'/> <label for='ERROR'>ERROR </label><br />");
       }
       else{
-        b.append("<input type='checkbox' name='HashOptions' value='2' /> ERROR <br />");
+        b.append("<input type='checkbox' name='HashOptions' value='2' id='ERROR'/> <label for='ERROR'>ERROR</label> <br />");
       }
       if(Arrays.asList(options).contains("3")){
-        b.append("<input type='checkbox' name='HashOptions' value='3' checked='checked' /> SUCCESS <br />");
+        b.append("<input type='checkbox' name='HashOptions' value='3' checked='checked' id='SUCCESS'/> <label for='SUCCESS'>SUCCESS </label><br />");
       }
       else{
-        b.append("<input type='checkbox' name='HashOptions' value='3' /> SUCCESS <br />");
+        b.append("<input type='checkbox' name='HashOptions' value='3' id='SUCCESS'/><label for='SUCCESS'> SUCCESS </label><br />");
       }
       b.append("<input type='hidden' value='"+getSessionId()+"' name='sessionId'/>");
-      b.append("<input type='submit' value='Update'>");
+      b.append("<input type='submit' value='Update' class='button blue'>");
       b.append("</form>");
+      b.append("</div>");
     }
     b.append("</div>");
     b.append("</div>");
