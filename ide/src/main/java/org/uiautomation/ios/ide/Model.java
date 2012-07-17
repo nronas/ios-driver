@@ -36,7 +36,9 @@ public class Model {
   private boolean logging = false;
   private boolean partLogging = false;
   private String[] options = null;
-
+  private String loggingAPIHost = "localhost";
+  private String loggingAPIPort = "8181";
+  private String AppFromIDE = "";
 
  
   public RemoteUIADriver getDriver() {
@@ -153,5 +155,29 @@ public class Model {
   
   public String[] getOptions(){
     return this.options;
+  }
+
+  public String getLoggingAPIPort() {
+    return loggingAPIPort;
+  }
+
+  public void setLoggingAPIPort(String loggingAPIPort) {
+    this.loggingAPIPort = loggingAPIPort;
+  }
+
+  public String getLoggingAPIHost() {
+    return loggingAPIHost;
+  }
+
+  public void setLoggingAPIHost(String loggingAPIHost) {
+    this.loggingAPIHost = loggingAPIHost;
+  }
+
+  public String getAppFromIDE() {
+    return AppFromIDE;
+  }
+
+  public void setAppFromIDE(String appFromIDE) {
+    AppFromIDE = appFromIDE;
   }
 }

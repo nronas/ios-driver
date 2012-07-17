@@ -51,11 +51,12 @@ public class AttachController extends BaseController {
     IOSCapabilities cap = d.getCapabilities();
 
     Localizable current = Localizable.valueOf(cap.getLanguage());
+ 
     IOSApplication app = new IOSApplication(current, cap.getApplication());
+
     app.loadAllContent();
     getModel().setAUT(app);
     getModel().refresh();
-
     return new RedirectView("browse");
   }
 

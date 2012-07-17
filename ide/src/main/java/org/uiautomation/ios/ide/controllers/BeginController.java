@@ -51,12 +51,12 @@ public class BeginController extends BaseController {
       getModel().setOptions(req.getParameter("options").split(","));
     }
     try {
-      view = new BeginView(getModel().getOptions(), req.getSession().getId(), getModel().getLogging(), config,config.getSupportedApps());
+      view = new BeginView(getModel().getLoggingAPIHost(), getModel().getLoggingAPIPort(), getModel().getOptions(), req.getSession().getId(), getModel().getLogging(), config,config.getSupportedApps());
     } catch (IOSAutomationException e1) {
         // e.printStackTrace();
     }
     catch (Exception e2) {
-      view = new BeginView(getModel().getOptions(), getModel().getLogSessionId(), config);
+      view = new BeginView(getModel().getLoggingAPIHost(), getModel().getLoggingAPIPort(), getModel().getOptions(), getModel().getLogSessionId(), config);
       //e2.printStackTrace();
     }
     finally{

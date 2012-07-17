@@ -35,8 +35,10 @@ public class BeginView extends MainHeader implements View{
   private String sessionId = null;
   private boolean logging = false;
   private String[] options = null;
+  private String loggingAPIHost;
+  private String loggingAPIPort;
   
-  public BeginView(String[] options, String sessionId, boolean logging, MessageList msgList, String... apps) throws IOSAutomationException {
+  public BeginView(String loggingAPIHost, String loggingAPIPort, String[] options, String sessionId, boolean logging, MessageList msgList, String... apps) throws IOSAutomationException {
     if (apps.length == 0) {
       throw new IOSAutomationException("no app specified.");
     }
@@ -47,16 +49,20 @@ public class BeginView extends MainHeader implements View{
       this.options = new String[options.length];
       System.arraycopy( options, 0, this.options, 0, options.length );
     }
+    this.loggingAPIHost = loggingAPIHost;
+    this.loggingAPIPort = loggingAPIPort;
     supportedApps.addAll(Arrays.asList(apps));
   }
 
-  public BeginView(String[] options, String sessionId, MessageList msgList){
+  public BeginView(String loggingAPIHost, String loggingAPIPort, String[] options, String sessionId, MessageList msgList){
     this.msgList = msgList;
     this.sessionId = sessionId;
     if(options != null){
       this.options = new String[options.length];
       System.arraycopy( options, 0, this.options, 0, options.length );
     }
+    this.loggingAPIHost = loggingAPIHost;
+    this.loggingAPIPort = loggingAPIPort;
   }
   
   public BeginView(String[] params){
@@ -121,7 +127,7 @@ public class BeginView extends MainHeader implements View{
     if(!getLogging()){
       b.append("<div id='log-options'>");
       b.append("Select your Log level(s).");
-      b.append("<form action='http://localhost:8181/session/log' method='post'>");
+      b.append("<form action='http://" + loggingAPIHost+ ":" + loggingAPIPort + "/session/log' method='post'>");
       b.append("<input type='checkbox' name='HashOptions' value='0' id='INFO'/> <label for='INFO'>INFO </label><br />");
       b.append("<input type='checkbox' name='HashOptions' value='1' id='WARNING'/> <label for='WARNING'>WARNING </label><br />");
       b.append("<input type='checkbox' name='HashOptions' value='2' id='ERROR'/> <label for='ERROR'>ERROR </label><br />");
@@ -133,15 +139,15 @@ public class BeginView extends MainHeader implements View{
     }
     else{
       b.append("<div id='log-actions-container'>");
-      b.append("<form action='http://localhost:8181/session/"+getSessionId()+"/log' method='get'>");
+      b.append("<form action='http://" + loggingAPIHost + ":" + loggingAPIPort + "/session/"+getSessionId()+"/log' method='get'>");
       b.append("<input type='submit' value='Get Logs' id='getLogs' class='button yellow'/>");
       b.append("</form>");
-      b.append("<form action='http://localhost:8181/session/"+getSessionId()+"/log' method='post'>");
+      b.append("<form action='http://" + loggingAPIHost+ ":"+ loggingAPIPort +"/session/"+getSessionId()+"/log' method='post'>");
       b.append("<input type='submit' value='Destroy Logging' id='quitLogging' class='button red'/>");
       b.append("</form>");
       b.append("</div>");
       b.append("<div id='update-logs-container-ide'>");
-      b.append("<form action='http://localhost:8181/session/"+getSessionId()+"/log/update' method='post'>");
+      b.append("<form action='http://" + loggingAPIHost+ ":" + loggingAPIPort + "/session/"+getSessionId()+"/log/update' method='post'>");
       b.append("Update your logging options");
       b.append("<br />");
       if(Arrays.asList(options).contains("0")){

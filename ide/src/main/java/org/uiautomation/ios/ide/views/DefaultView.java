@@ -123,10 +123,10 @@ public class DefaultView implements View {
       }
     }
     if(model.getLogSessionId() != null && model.getLogging()){
-      b.append("<form action='http://localhost:8181/session/"+model.getLogSessionId()+"/log' method='get'>");
+      b.append("<form action='http://" + model.getLoggingAPIHost() + ":" + model.getLoggingAPIPort() + "/session/"+model.getLogSessionId()+"/log' method='get'>");
       b.append("<input type='submit' value='Get Logs' class='button yellow'/>");
       b.append("</form>");
-      b.append("<form action='http://localhost:8181/session/"+model.getLogSessionId()+"/log' method='post'>");
+      b.append("<form action='http://" + model.getLoggingAPIHost() + ":" + model.getLoggingAPIPort() + "/session/"+model.getLogSessionId()+"/log' method='post'>");
       b.append("<input type='submit' value='Destroy Logging' class='button red'/>");
       b.append("</form>");
       if(model.getPartLogging()){
@@ -136,7 +136,7 @@ public class DefaultView implements View {
         b.append("<div class='on_off' session='" + model.getLogSessionId() + "'> Part-Logging: <input type='checkbox' id='on_off'/> </div>");
       }
       b.append("<div id='update-logs-container'>");
-      b.append("<form action='http://localhost:8181/session/"+model.getLogSessionId()+"/log/update' method='post'>");
+      b.append("<form action='http://" + model.getLoggingAPIHost() + ":" + model.getLoggingAPIPort() + "/session/"+model.getLogSessionId()+"/log/update' method='post'>");
       b.append("<p>Update your logging options</p>");
       if(Arrays.asList(model.getOptions()).contains("0")){
         b.append("<input type='checkbox' name='HashOptions' value='0'  checked='checked' id='info'/> <label for='info'>INFO</label> <br />");
@@ -170,7 +170,7 @@ public class DefaultView implements View {
     else{
       b.append("<div id='log-options-default-view'>");
       b.append("Select your logging level(s)");
-      b.append("<form action='http://localhost:8181/session/log' method='post'>");
+      b.append("<form action='http://" + model.getLoggingAPIHost() + ":" + model.getLoggingAPIPort() + "/session/log' method='post'>");
       b.append("<input type='checkbox' name='HashOptions' value='0' id='INFO'/> <label for='INFO'>INFO </label><br />");
       b.append("<input type='checkbox' name='HashOptions' value='1' id='WARNING'/> <label for='WARNING'>WARNING </label><br />");
       b.append("<input type='checkbox' name='HashOptions' value='2' id='ERROR'/> <label for='ERROR'>ERROR</label><br />");

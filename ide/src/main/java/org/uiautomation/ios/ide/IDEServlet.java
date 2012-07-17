@@ -75,13 +75,28 @@ public class IDEServlet extends UIAScriptProxyBasedServlet {
   protected void doGet(HttpServletRequest req, HttpServletResponse response) throws IOException {
     response.setCharacterEncoding("UTF-8");
     response.addHeader("Access-Control-Allow-Origin", "http://localhost:8181");
+    
+    if(req.getParameter("aut") != null){
+      String[] path = req.getParameter("aut").split("\\.")[0].split("/");
+      String aut = path[path.length - 1];
+      if(aut.equals("eBay")){
+        model.setAppFromIDE("eBay");
+      }
+      else if(aut.equals("UICatalog")){
+        model.setAppFromIDE("UICatalog");
+      }
+      else if(aut.equals("InternationalMountains")){
+        model.setAppFromIDE("IntlMountains");
+      }
+    }
+    
     try {
       IDECommandController controller = getController(req.getPathInfo());
-      if(model.getLogging() && model.getLogSessionId() == null){
+      if(model != null && model.getLogging() && model.getLogSessionId() == null){
         model.setLogSessionId(req.getSession().getId());
         getServerConfig().setLogSessionId(model.getLogSessionId());
       }
-      else if(model.getLogging()){
+      else if(model != null && model.getLogging()){
         if(req.getParameter("partLogging") != null){
           model.setPartLogging(Boolean.parseBoolean(req.getParameter("partLogging")));
         }
