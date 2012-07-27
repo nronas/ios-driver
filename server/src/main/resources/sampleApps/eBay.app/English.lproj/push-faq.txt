@@ -1,9 +1,0 @@
-To ensure that you will receive eBay Mobile push notifications:
-- The item must be added to your Watch List even if you have bid on the item
-- "Keep me logged in" must be set to ON in eBay Mobile settings
-- Notifications must be turned ON in the device System Settings
-- The wifi network you are on must support push notification traffic
-
-Push notifications will not work if:
-- You are using a Jail Broken device
-- Your iPod Touch device is in the sleep mode

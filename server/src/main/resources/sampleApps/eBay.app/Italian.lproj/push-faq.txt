@@ -1,9 +1,0 @@
-Per ricevere le notifiche di eBay Mobile:
-- L'oggetto deve essere aggiunto all'elenco di oggetti che osservi anche se hai fatto offerte.
-- L'impostazione Mantieni la connessione deve essere attivata nelle Preferenze di eBay Mobile.
-- Le notifiche devono essere attivate nelle impostazioni del sistema.
-- La rete wi-fi deve supportare le notifiche.
-
-Le notifiche non funzionano se:
-- Usi un dispositivo Jail Broken.
-- Usi un iPod touch in Sleep Mode

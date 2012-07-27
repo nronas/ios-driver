@@ -1,9 +1,0 @@
-Um sicher zu stellen, dass Sie "Push-Benachrichtigungen" für eBay Mobile erhalten:
-- muss der Artikel zur Liste Ihrer beobachteten Artikel hinzugefügt werden, auch wenn Sie auf den Artikel bereits geboten haben
-- muss "Ich möchte eingeloggt bleiben" in den eBay Mobile-Einstellungen eingeschaltet sein
-- müssen Benachrichtigungen in den Systemeinstellungen Ihres Geräts eingeschaltet sind
-- muss von dem von Ihnen genutzten WiFi-Netzwerk die Funktion "Push-Benachrichtigungen unterstützt werden
-
-"Push-Benachrichtigungen" funktionieren nicht:
-- wenn Sie ein widerrechtlich freigeschaltetes Gerät nutzen
-- wenn sich Ihr iPod Touch im Ruhemodus befindet

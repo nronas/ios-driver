@@ -1,9 +1,0 @@
-Pour recevoir les notifications eBay Mobile, assurez-vous que :
-- l'objet concerné par la notification figure dans votre liste d'Affaires à suivre, même si vous avez déjà enchéri sur cet objet ;
-- l'option Je souhaite rester connecté est activée dans les paramètres d'eBay Mobile ;
-- la fonction d'envoi de notifications est activée dans les paramètres de votre appareil ;
-- le réseau Wi-fi que vous utilisez prend en charge le trafic lié à l'envoi de notifications.
-
-Vous ne recevrez pas de notification dans les cas suivants :
-- L'appareil que vous utilisez a été modifié (aussi appelé « Jailbreaking »).
-- Votre iPod Touch est en veille.

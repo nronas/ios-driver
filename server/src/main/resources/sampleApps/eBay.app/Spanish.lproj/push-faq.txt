@@ -1,9 +1,0 @@
-Para recibir las notificaciones “push” de eBay Móvil:
-- Debes añadir el artículo a tu lista de seguimiento aunque ya hayas pujado por él.
-- "Mantener abierta la sesión" debe estar activado en la configuración de eBay Móvil
-- Debes tener las notificaciones activadas en la configuración del sistema del dispositivo
-- La red wi-fi a la que te conectes debe admitir notificaciones procedentes del servidor ("push”)
-
-Estas notificaciones no funcionarán si:
-- Usas un dispositivo Jail Broken 
-- Tu iPod Touch está en modo de reposo
